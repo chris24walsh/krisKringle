@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title></title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width">
+<script src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
+</head>
+<body style='background-image: url(green_background.png)'>
+<!--[if lt IE 7]>
+        <p class="chromeframe">You are using an <strong>outdated</strong> 
+        browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> 
+        or <a href="http://www.google.com/chromeframe/?redirect=true">activate 
+            Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+<!-- Add your site or application content here -->
+
+
+	<!--############Form Input#############-->
+	<form id='form' action='javascript:doForm();'>
+		Your name: <input type='text' id='name' name='name'><br>
+		Your email: <input type='text' id='email' name='email'><br>
+		<input type='submit'></input>
+	</form>
+
+
+<script>
+
+	<!--############Initialize the Parse app and the Mailgun Cloud module#############-->
+
+	Parse.initialize( 'QjPmsOxpQNw3XbTM6BBd6zbW13KpKlM8fCsqTenJ', '4N7fBVCzkpcg1u21rvQqBGZb4hRogvqy6b5hBhbM' );
+	
+	
+	<!--######################################################-->  
+
+	function doForm() {
+		var Gifter = Parse.Object.extend('Gifter');
+		var gifter = new Gifter();
+		var name = document.getElementById('name').value;
+		gifter.set('Name', name);
+		var email = document.getElementById('email').value;
+		gifter.set('Email', email);
+		gifter.save(null, {
+			success: function(user) {
+				alert('Your information has been saved');
+			},
+			error: function(user, error) {
+				alert("Error: " + error.code + " " + error.message);
+			}
+		});
+	}	
+
+	function mail(newMessage) {
+		var newEmail = Parse.User.current().get("email");
+		Parse.Cloud.run('sendMail', {email: newEmail, message: newMessage}, {
+			success: function(success) {
+			}, error: function(error) {
+			}
+		});
+	}
+</script>                                                                                           
+</body>                                                                                             
+</html> 

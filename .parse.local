@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "KrisKringle": {
+      "applicationId": "QjPmsOxpQNw3XbTM6BBd6zbW13KpKlM8fCsqTenJ"
+    },
+    "_default": {
+      "link": "KrisKringle"
+    }
+  }
+}
